@@ -1,0 +1,27 @@
+nestjs-prisma-graphql
+Copyright 2026 Pegasus Heavy Industries LLC
+
+This product includes software developed at Pegasus Heavy Industries LLC
+(https://github.com/pegasusheavy).
+
+This project is derived from prisma-nestjs-graphql by unlight
+(https://github.com/unlight/prisma-nestjs-graphql), originally licensed under
+the MIT License.
+
+================================================================================
+
+Third-Party Notices
+================================================================================
+
+This software includes the following third-party components:
+
+- @prisma/generator-helper - Apache-2.0
+- ts-morph - MIT
+- lodash-es - MIT
+- await-event-emitter - MIT
+- json5 - MIT
+- pluralize - MIT
+- outmatch - MIT
+
+For complete license information for these dependencies, please refer to the
+respective package documentation.

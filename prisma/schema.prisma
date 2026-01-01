@@ -1,0 +1,128 @@
+datasource database {
+  provider = "postgresql"
+}
+
+generator client {
+  provider        = "prisma-client"
+  output          = "./client"
+  previewFeatures = ["postgresqlExtensions"]
+  moduleFormat    = "esm"
+}
+
+generator nestgraphql {
+  provider                              = "tsx src/index.ts"
+  output                                = "../@generated"
+  noAtomicOperations                    = false
+  combineScalarFilters                  = false
+  reExport                              = None
+  emitSingle                            = false
+  emitCompiled                          = false
+  purgeOutput                           = true
+  esmCompatible                         = true
+  requireSingleFieldsInWhereUniqueInput = false
+  fields_Validator_from                 = "class-validator"
+  fields_Validator_input                = true
+  fields_Scalars_from                   = "graphql-scalars"
+  fields_Scalars_input                  = true
+  useInputType_WhereInput_ALL           = "WhereInput"
+  prismaClientImport                    = "../prisma/client"
+}
+
+/// User entity
+model User {
+  id               String    @id @default(cuid())
+  /// @FieldType('Scalars.GraphQLEmailAddress')
+  email            String    @unique
+  /// User's display name
+  /// @Validator.MinLength(3)
+  /// @Validator.MaxLength(50)
+  name             String    @unique
+  /// @HideField()
+  password         String
+  bio              String?
+  image            String?
+  following        User[]    @relation("UserFollows")
+  followers        User[]    @relation("UserFollows")
+  favoriteArticles Article[] @relation(name: "FavoritedArticles")
+  articles         Article[] @relation("ArticleAuthor")
+  comments         Comment[]
+  countComments    Int?
+  rating           Float?
+  money            Decimal?
+  role             Role?
+  profile          Profile?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@unique([email, name])
+}
+
+model Tag {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  articles Article[]
+}
+
+model Article {
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  title          String
+  description    String
+  body           String
+  tags           Tag[]
+  /// @HideField({ match: '*Create*Input' })
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  favoritesCount Int       @default(0)
+  author         User      @relation(name: "ArticleAuthor", fields: [authorId], references: [id])
+  authorId       String
+  favoritedBy    User[]    @relation(name: "FavoritedArticles")
+  comments       Comment[]
+  active         Boolean?  @default(true)
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  /// @HideField({ match: '*Update*Input' })
+  updatedAt DateTime @updatedAt
+  body      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  article   Article? @relation(fields: [articleId], references: [id])
+  articleId String?
+}
+
+/// User access control roles
+enum Role {
+  /// Default user access level
+  USER
+  /// Administrator with full access
+  ADMIN
+  /// Content moderator
+  MODERATOR
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  bio       String?
+  website   String?
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dummy {
+  id       String    @id
+  date     DateTime? @default(now())
+  int      Int?
+  float    Float?
+  bytes    Bytes?
+  decimal  Decimal
+  decimals Decimal[]
+  bigInt   BigInt?
+  json     Json?
+  friends  String[]
+}

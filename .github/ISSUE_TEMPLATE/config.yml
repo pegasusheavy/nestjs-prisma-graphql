@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/PegasusHeavyIndustries/nestjs-prisma-graphql/discussions
+    about: Ask questions and share ideas with the community
+  - name: 📖 Documentation
+    url: https://pegasusheavyindustries.github.io/nestjs-prisma-graphql/
+    about: Check our documentation for guides and API reference
+  - name: 🔍 Stack Overflow
+    url: https://stackoverflow.com/questions/tagged/prisma-nestjs-graphql
+    about: Search for answers on Stack Overflow

@@ -1,0 +1,148 @@
+{
+  "name": "@pegasusheavy/nestjs-prisma-graphql",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Generate NestJS GraphQL types from Prisma schema - ESM-first for Prisma 7+",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pegasusheavy/nestjs-prisma-graphql.git"
+  },
+  "homepage": "https://pegasusheavy.github.io/nestjs-prisma-graphql",
+  "bugs": {
+    "url": "https://github.com/pegasusheavy/nestjs-prisma-graphql/issues"
+  },
+  "keywords": [
+    "nestjs",
+    "graphql",
+    "prisma",
+    "prisma-generator",
+    "nestjs-graphql",
+    "esm",
+    "prisma7",
+    "fastify",
+    "express"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./generate": {
+      "import": "./dist/generate.js",
+      "types": "./dist/generate.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "generate": [
+        "dist/generate.d.ts"
+      ]
+    }
+  },
+  "bin": {
+    "nestjs-prisma-graphql": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prisma:generate": "prisma generate",
+    "clean": "rm -rf dist @generated",
+    "prepublishOnly": "pnpm run build",
+    "prepare": "husky",
+    "benchmark": "tsx src/benchmark/index.ts",
+    "benchmark:analyze": "tsx src/benchmark/analysis.ts",
+    "docs:dev": "cd docs && pnpm start",
+    "docs:build": "cd docs && pnpm build",
+    "docs:install": "cd docs && pnpm install"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.11.0",
+  "dependencies": {
+    "@prisma/generator-helper": "^7.0.0",
+    "await-event-emitter": "^2.0.2",
+    "filenamify": "^6.0.0",
+    "flat": "^6.0.1",
+    "get-relative-path": "^1.0.2",
+    "graceful-fs": "^4.2.11",
+    "json5": "^2.2.3",
+    "lodash-es": "^4.17.21",
+    "outmatch": "^1.0.0",
+    "pluralize": "^8.0.0",
+    "pupa": "^3.1.0",
+    "ts-morph": "^25.0.0"
+  },
+  "devDependencies": {
+    "@apollo/server": "^4.11.0",
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@eslint/js": "^9.17.0",
+    "@nestjs/apollo": "^13.0.2",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/graphql": "^13.0.2",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-fastify": "^11.0.1",
+    "@nestjs/mercurius": "^13.0.0",
+    "@prisma/client": "^7.0.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.10.0",
+    "@types/pluralize": "^0.0.33",
+    "@vitest/coverage-v8": "^2.1.8",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "decimal.js": "^10.4.3",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-perfectionist": "^4.6.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.14.0",
+    "graphql": "^16.10.0",
+    "graphql-scalars": "^1.24.0",
+    "graphql-type-json": "^0.3.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.4.2",
+    "prisma": "^7.0.0",
+    "prisma-graphql-type-decimal": "^3.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "simplytyped": "^3.3.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "type-fest": "^4.30.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@nestjs/graphql": ">=12.0.0",
+    "prisma": ">=7.0.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.prisma": [
+      "prettier --write"
+    ]
+  }
+}

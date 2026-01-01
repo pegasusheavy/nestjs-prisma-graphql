@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom color palette - Cyberpunk/Industrial theme */
+  --color-pegasus-50: #f0fdf9;
+  --color-pegasus-100: #ccfbef;
+  --color-pegasus-200: #99f6df;
+  --color-pegasus-300: #5eeac8;
+  --color-pegasus-400: #2dd4ac;
+  --color-pegasus-500: #14b893;
+  --color-pegasus-600: #0d9477;
+  --color-pegasus-700: #0f7661;
+  --color-pegasus-800: #115e4f;
+  --color-pegasus-900: #134e42;
+  --color-pegasus-950: #042f27;
+
+  --color-forge-50: #fef7ee;
+  --color-forge-100: #fdedd6;
+  --color-forge-200: #f9d7ac;
+  --color-forge-300: #f5b978;
+  --color-forge-400: #f09142;
+  --color-forge-500: #ec7420;
+  --color-forge-600: #dd5a16;
+  --color-forge-700: #b74314;
+  --color-forge-800: #923618;
+  --color-forge-900: #762f17;
+  --color-forge-950: #40150a;
+
+  --color-steel-50: #f6f7f9;
+  --color-steel-100: #eceef2;
+  --color-steel-200: #d5dae2;
+  --color-steel-300: #b0bac9;
+  --color-steel-400: #8594ab;
+  --color-steel-500: #667691;
+  --color-steel-600: #515f78;
+  --color-steel-700: #434e62;
+  --color-steel-800: #3a4353;
+  --color-steel-900: #343b47;
+  --color-steel-950: #22262f;
+
+  /* Typography */
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  min-height: 100vh;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  margin: 0;
+  border-radius: 0.75rem;
+  background: #1a1e2e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+code[class*="language-"] {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Inline code */
+:not(pre) > code {
+  font-family: var(--font-mono);
+  background: rgba(20, 184, 147, 0.15);
+  color: #5eeac8;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Selection */
+::selection {
+  background: rgba(20, 184, 147, 0.3);
+  color: #fff;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(20, 184, 147, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(20, 184, 147, 0.5);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Staggered animations */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #5eeac8 0%, #14b893 50%, #f09142 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Industrial pattern */
+.industrial-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glow border */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #14b893, #f09142);
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(10px);
+}

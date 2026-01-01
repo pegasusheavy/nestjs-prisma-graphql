@@ -1,0 +1,78 @@
+import type { SourceFile } from 'ts-morph';
+
+import type { FieldLocation, GeneratorConfiguration } from '../types.js';
+import { fileTypeByLocation } from './file-type-by-location.js';
+import { relativePath } from './relative-path.js';
+
+export function getGraphqlImport(args: {
+  sourceFile: SourceFile;
+  typeName: string;
+  location: FieldLocation;
+  isId?: boolean;
+  fileType?: string;
+  noTypeId?: boolean;
+  getSourceFile(args: { type: string; name: string }): SourceFile;
+  config: GeneratorConfiguration;
+}): { name: string; specifier?: string } {
+  const {
+    config,
+    fileType,
+    getSourceFile,
+    isId,
+    location,
+    noTypeId,
+    sourceFile,
+    typeName,
+  } = args;
+
+  if (location === 'scalar') {
+    if (isId && !noTypeId) {
+      return { name: 'ID', specifier: '@nestjs/graphql' };
+    }
+
+    const graphqlType = config.graphqlScalars[typeName];
+    if (graphqlType) {
+      return { name: graphqlType.name, specifier: graphqlType.specifier };
+    }
+
+    switch (typeName) {
+      case 'Float':
+      case 'Int': {
+        return { name: typeName, specifier: '@nestjs/graphql' };
+      }
+      case 'DateTime': {
+        return { name: 'Date', specifier: undefined };
+      }
+      case 'true':
+      case 'Boolean': {
+        return { name: 'Boolean', specifier: undefined };
+      }
+      case 'Decimal': {
+        return {
+          name: 'GraphQLDecimal',
+          specifier: 'prisma-graphql-type-decimal',
+        };
+      }
+      case 'Json': {
+        return { name: 'GraphQLJSON', specifier: 'graphql-type-json' };
+      }
+    }
+
+    return { name: 'String', specifier: undefined };
+  }
+
+  let sourceFileType = fileTypeByLocation(location);
+  if (sourceFileType === 'output' && fileType === 'model') {
+    sourceFileType = 'model';
+  }
+
+  const specifier = relativePath(
+    sourceFile.getFilePath(),
+    getSourceFile({
+      name: typeName,
+      type: sourceFileType,
+    }).getFilePath(),
+  );
+
+  return { name: typeName, specifier };
+}

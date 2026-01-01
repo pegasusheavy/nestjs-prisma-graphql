@@ -1,0 +1,159 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below to help us understand and fix the issue.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues to ensure this bug hasn't been reported
+          required: true
+        - label: I have read the documentation
+          required: true
+        - label: I am using the latest version of the package
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: Describe the bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Create a schema with...
+        2. Run `prisma generate`
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: Describe what you expected...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: Describe what actually happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: schema
+    attributes:
+      label: Prisma Schema
+      description: Your Prisma schema (or relevant parts)
+      render: prisma
+      placeholder: |
+        generator nestgraphql {
+          provider = "nestjs-prisma-graphql"
+          output   = "../src/@generated"
+        }
+
+        model User {
+          id    String @id
+          email String
+        }
+    validations:
+      required: false
+
+  - type: textarea
+    id: generated
+    attributes:
+      label: Generated Code
+      description: The generated code that shows the issue (if applicable)
+      render: typescript
+    validations:
+      required: false
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error Output
+      description: Any error messages or stack traces
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Package Version
+      description: Version of @pegasus-heavy/nestjs-prisma-graphql
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: prisma-version
+    attributes:
+      label: Prisma Version
+      description: Output of `npx prisma --version`
+      placeholder: "7.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      description: Output of `node --version`
+      placeholder: "v22.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: esm
+    attributes:
+      label: ESM Mode
+      description: Is your project using ESM?
+      options:
+        - "Yes (type: module)"
+        - "No (CommonJS)"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem
+    validations:
+      required: false
