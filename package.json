@@ -49,6 +49,10 @@
     "dist",
     "NOTICE"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
