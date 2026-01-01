@@ -1,9 +1,13 @@
 import type { GeneratorOptions } from '@prisma/generator-helper';
 import { ok } from 'node:assert';
+import { createRequire } from 'node:module';
 import { mapKeys } from 'lodash-es';
 import { Project, QuoteKind } from 'ts-morph';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const AwaitEventEmitter = require('await-event-emitter').default;
+
+// Use createRequire for CommonJS module compatibility in ESM
+const requireCjs = createRequire(import.meta.url);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+const AwaitEventEmitter = requireCjs('await-event-emitter').default;
 
 import { argsType } from './handlers/args-type.js';
 import { combineScalarFilters } from './handlers/combine-scalar-filters.js';
