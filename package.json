@@ -46,7 +46,8 @@
     "nestjs-prisma-graphql": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "scripts": {
     "build": "tsup",
