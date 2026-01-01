@@ -1,4 +1,8 @@
-import { generatorHandler, type GeneratorOptions } from '@prisma/generator-helper';
+import type { GeneratorOptions } from '@prisma/generator-helper';
+
+import generatorHelper from '@prisma/generator-helper';
+
+const { generatorHandler } = generatorHelper;
 
 import { generate } from './generate.js';
 
@@ -46,12 +50,8 @@ export function isGeneratorDisabled(
   }
 
   // Check generator config option
-  const configDisabled = options.generator.config['disabled'];
-  if (
-    configDisabled === 'true' ||
-    configDisabled === '1' ||
-    configDisabled === 'yes'
-  ) {
+  const configDisabled = options.generator.config.disabled;
+  if (configDisabled === 'true' || configDisabled === '1' || configDisabled === 'yes') {
     return true;
   }
 
@@ -61,7 +61,9 @@ export function isGeneratorDisabled(
 generatorHandler({
   async onGenerate(options: GeneratorOptions) {
     if (isGeneratorDisabled(options)) {
-      console.log('⏭️  nestjs-prisma-graphql: Generation skipped (disabled via environment variable or config)');
+      console.log(
+        '⏭️  nestjs-prisma-graphql: Generation skipped (disabled via environment variable or config)',
+      );
       return;
     }
     await generate(options);
