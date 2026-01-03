@@ -89,7 +89,7 @@
     "outmatch": "^1.0.0",
     "pluralize": "^8.0.0",
     "pupa": "^3.1.0",
-    "ts-morph": "^25.0.0"
+    "ts-morph": "^27.0.2"
   },
   "devDependencies": {
     "@apollo/server": "^4.11.0",
