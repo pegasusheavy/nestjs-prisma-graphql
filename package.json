@@ -107,7 +107,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.0",
     "@types/pluralize": "^0.0.33",
-    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/coverage-v8": "^4.0.16",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "decimal.js": "^10.4.3",
@@ -132,7 +132,7 @@
     "type-fest": "^5.3.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0",
-    "vitest": "^2.1.8"
+    "vitest": "^4.0.16"
   },
   "peerDependencies": {
     "@nestjs/graphql": ">=12.0.0",
