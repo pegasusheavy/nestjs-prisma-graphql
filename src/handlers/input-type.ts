@@ -148,8 +148,8 @@ export function inputType(
 
     if (propertySettings) {
       importDeclarations.create({ ...propertySettings });
-    } else if (propertyType.includes('Decimal')) {
-      importDeclarations.add('Decimal', `${config.prismaClientImport}/../internal/prismaNamespace`);
+    } else if (propertyType.some(p => p.includes('Prisma.Decimal'))) {
+      importDeclarations.add('Prisma', config.prismaClientImport);
     } else if (propertyType.some(p => p.startsWith('Prisma.'))) {
       importDeclarations.add('Prisma', config.prismaClientImport);
     }

@@ -36,9 +36,9 @@ describe('getPropertyType', () => {
       ]);
     });
 
-    it('should return Decimal for Decimal', () => {
+    it('should return Prisma.Decimal for Decimal', () => {
       expect(getPropertyType({ type: 'Decimal', location: 'scalar' })).toEqual([
-        'Decimal',
+        'Prisma.Decimal',
       ]);
     });
 
