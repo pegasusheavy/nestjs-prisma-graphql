@@ -1,3 +1,4 @@
+import filenamify from 'filenamify';
 import { kebabCase } from 'lodash-es';
 import pluralize from 'pluralize';
 import pupa from 'pupa';
@@ -10,7 +11,7 @@ export function generateFileName(args: {
 }) {
   const { getModelName, name, template, type } = args;
 
-  return pupa(template, {
+  const rawPath = pupa(template, {
     get model() {
       const result = getModelName(name) || 'prisma';
       return kebabCase(result);
@@ -33,4 +34,10 @@ export function generateFileName(args: {
     },
     type,
   });
+
+  // Apply filenamify to each path segment after template expansion
+  return rawPath
+    .split('/')
+    .map(segment => filenamify(segment, { replacement: '-' }))
+    .join('/');
 }

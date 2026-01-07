@@ -1,7 +1,6 @@
 import { ok } from 'node:assert';
 import { existsSync } from 'node:fs';
 
-import filenamify from 'filenamify';
 import { unflatten } from 'flat';
 import JSON5 from 'json5';
 import { memoize, merge, trim } from 'lodash-es';
@@ -43,11 +42,10 @@ export function createConfig(data: Record<string, unknown>) {
     config.outputFilePattern || `{model}/{name}.{type}.ts`,
   );
 
-  // Process each path segment separately since filenamify doesn't allow '/' as replacement
+  // Validate and sanitize the output file pattern
+  // We don't use filenamify on the template itself since it contains placeholders like {model}, {name}, {type}
+  // Instead, we just normalize the path separators and trim
   let outputFilePattern = configOutputFilePattern
-    .split('/')
-    .map(segment => filenamify(segment, { replacement: '-' }))
-    .join('/')
     .replaceAll('..', '/')
     .replaceAll(/\/+/g, '/');
   outputFilePattern = trim(outputFilePattern, '/');
