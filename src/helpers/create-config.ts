@@ -43,9 +43,11 @@ export function createConfig(data: Record<string, unknown>) {
     config.outputFilePattern || `{model}/{name}.{type}.ts`,
   );
 
-  let outputFilePattern = filenamify(configOutputFilePattern, {
-    replacement: '/',
-  })
+  // Process each path segment separately since filenamify doesn't allow '/' as replacement
+  let outputFilePattern = configOutputFilePattern
+    .split('/')
+    .map(segment => filenamify(segment, { replacement: '-' }))
+    .join('/')
     .replaceAll('..', '/')
     .replaceAll(/\/+/g, '/');
   outputFilePattern = trim(outputFilePattern, '/');
