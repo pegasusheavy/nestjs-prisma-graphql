@@ -25,6 +25,7 @@ import { registerEnum } from './handlers/register-enum.js';
 import { generateRegisterAllTypes } from './handlers/register-all-types.js';
 import { requireSingleFieldsInWhereUniqueInput } from './handlers/require-single-fields-in-whereunique-input.js';
 import { generateTypeRegistry } from './handlers/type-registry.js';
+import { generateDecimalHelpers } from './handlers/decimal-helpers.js';
 import { warning } from './handlers/warning.js';
 import { createConfig } from './helpers/create-config.js';
 import {
@@ -155,6 +156,10 @@ export async function generate(
   if (config.esmCompatible) {
     generateTypeRegistry(eventArguments);
   }
+
+  // Generate decimal helpers for Prisma 7+ compatibility
+  // This replaces the dependency on prisma-graphql-type-decimal
+  generateDecimalHelpers(eventArguments);
 
   for (const model of datamodel.models) {
     await eventEmitter.emit('Model', model, eventArguments);

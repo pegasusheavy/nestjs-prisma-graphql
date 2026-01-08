@@ -252,7 +252,13 @@ export function inputType(
       });
 
       if (graphqlType === 'GraphQLDecimal') {
-        importDeclarations.add('transformToDecimal', 'prisma-graphql-type-decimal');
+        // Import from generated decimal-helpers.ts instead of prisma-graphql-type-decimal
+        // This provides Prisma 7+ compatibility
+        const decimalHelpersPath = relativePath(
+          sourceFile.getFilePath(),
+          `${output}/decimal-helpers.ts`,
+        );
+        importDeclarations.add('transformToDecimal', decimalHelpersPath);
         importDeclarations.add('Transform', 'class-transformer');
         importDeclarations.add('Type', 'class-transformer');
 
