@@ -1,6 +1,4 @@
 import { defineConfig } from 'tsup';
-import { readFileSync, writeFileSync, chmodSync } from 'fs';
-import { join } from 'path';
 
 export default defineConfig({
   entry: ['src/index.ts', 'src/generate.ts'],
@@ -33,13 +31,6 @@ export default defineConfig({
     'outmatch',
     'pupa',
   ],
-  // Add shebang to index.js after build for direct CLI execution
-  // This prevents pnpm from generating wrapper scripts with hardcoded absolute paths
-  async onSuccess() {
-    const indexPath = join('dist', 'index.js');
-    const content = readFileSync(indexPath, 'utf-8');
-    writeFileSync(indexPath, `#!/usr/bin/env node\n${content}`);
-    chmodSync(indexPath, 0o755);
-    console.log('✅ Added shebang to dist/index.js');
-  },
+  // NOTE: Do NOT add a shebang to ESM files. When Node.js imports an ESM file,
+  // the shebang causes a SyntaxError. The pnpm/npm bin wrapper handles execution.
 });
