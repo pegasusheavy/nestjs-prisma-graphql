@@ -1,0 +1,67 @@
+# @pegasus-heavy/nestjs-prisma-graphql
+
+> Generate NestJS GraphQL types from your Prisma schema with ESM-first support.
+
+An ESM-native Prisma generator that produces object types, inputs, args, enums, and more from your Prisma schema for seamless integration with @nestjs/graphql. Built from the ground up for ESM as the primary module format with full Prisma 7+ compatibility. Includes a type registry for circular dependency resolution, first-class class-validator integration, custom decorator support, and works with both Express and Fastify NestJS platforms (Apollo and Mercurius).
+
+## Links
+
+- [Documentation](https://pegasusheavy.github.io/nestjs-prisma-graphql/)
+- [GitHub Repository](https://github.com/pegasusheavy/nestjs-prisma-graphql)
+- [npm Package](https://www.npmjs.com/package/@pegasus-heavy/nestjs-prisma-graphql)
+
+## Key Features
+
+- ESM-first build using lodash-es and proper .js extensions
+- Prisma 7+ compatible with full support for latest Prisma versions
+- Built-in circular dependency handling with type registry for ESM import resolution
+- Generates ready-to-use @nestjs/graphql decorators and types
+- TypeScript 5.x support with NodeNext module resolution
+- First-class class-validator integration for validation decorators
+- Customizable output with flexible file patterns, selective generation, and re-export options
+- Custom scalars, decorators, and field type overrides
+- Works with Express and Fastify NestJS platforms (Apollo and Mercurius)
+
+## Installation
+
+```bash
+# Using pnpm (recommended)
+pnpm add -D @pegasus-heavy/nestjs-prisma-graphql
+
+# Using npm
+npm install -D @pegasus-heavy/nestjs-prisma-graphql
+```
+
+## Quick Start
+
+Add the generator to your Prisma schema:
+
+```prisma
+generator nestgraphql {
+  provider      = "nestjs-prisma-graphql"
+  output        = "../src/@generated"
+  esmCompatible = true
+}
+```
+
+Run generation:
+
+```bash
+npx prisma generate
+```
+
+Use the generated types in your resolvers:
+
+```typescript
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { User } from './@generated/user/user.model';
+import { FindManyUserArgs } from './@generated/user/find-many-user.args';
+
+@Resolver(() => User)
+export class UserResolver {
+  @Query(() => [User])
+  async users(@Args() args: FindManyUserArgs): Promise<User[]> {
+    // Your implementation
+  }
+}
+```
