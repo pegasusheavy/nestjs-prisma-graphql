@@ -81,7 +81,7 @@ jobs:
           npm version ${{ needs.validate.outputs.version }} --no-git-tag-version
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-dist
           path: |
