@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions, @typescript-eslint/no-non-null-assertion, @typescript-eslint/switch-exhaustiveness-check, @typescript-eslint/no-base-to-string, max-lines-per-function */
+import type { EventArguments } from '../types.js';
+
 import { ok } from 'node:assert';
 import {
   type ClassDeclarationStructure,
@@ -7,14 +10,12 @@ import {
 } from 'ts-morph';
 
 import { ImportDeclarationMap } from '../helpers/import-declaration-map.js';
-import type { EventArguments } from '../types.js';
 
 export async function generateFiles(args: EventArguments): Promise<void> {
   const { config, eventEmitter, output, project } = args;
 
   if (config.emitSingle) {
-    const rootDirectory =
-      project.getDirectory(output) ?? project.createDirectory(output);
+    const rootDirectory = project.getDirectory(output) ?? project.createDirectory(output);
     const sourceFile =
       rootDirectory.getSourceFile('index.ts') ??
       rootDirectory.createSourceFile('index.ts', undefined, { overwrite: true });
@@ -52,9 +53,9 @@ export async function generateFiles(args: EventArguments): Promise<void> {
       return stmts;
     });
     const imports = new ImportDeclarationMap();
-    const enums: (StatementStructures | string)[] = [];
+    const enums: Array<StatementStructures | string> = [];
     const classes: ClassDeclarationStructure[] = [];
-    for (const statement of statements as (StatementStructures | string)[]) {
+    for (const statement of statements as Array<StatementStructures | string>) {
       if (typeof statement === 'string') {
         if (statement.startsWith('registerEnumType')) {
           enums.push(statement);
@@ -106,6 +107,18 @@ export async function generateFiles(args: EventArguments): Promise<void> {
       kind: StructureKind.SourceFile,
       statements: [...imports.toStatements(), ...enums, ...classes],
     });
+  }
+
+  const sourceFileCount = project.getSourceFiles().length;
+  // eslint-disable-next-line no-console
+  console.log(
+    `nestjs-prisma-graphql: saving ${String(sourceFileCount)} source files to ${output}`,
+  );
+
+  if (sourceFileCount === 0) {
+    throw new Error(
+      'nestjs-prisma-graphql: project has 0 source files — nothing to write',
+    );
   }
 
   if (config.emitCompiled) {
