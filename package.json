@@ -136,7 +136,7 @@
     "type-fest": "^5.8.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.63.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "@nestjs/graphql": ">=12.0.0",
